@@ -109,7 +109,7 @@ In the “Deploy and Run Transactions” section, move to the Environment and se
 
 #### 4. Deploy Smart contract
 
-Select the smart contract to be deployed and write the Constructor parameters is Remix detects them
+Select the smart contract to be deployed and write the Constructor parameters if Remix detects them
 
 <figure><img src="../../.gitbook/assets/image (19) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
