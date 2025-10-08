@@ -1,6 +1,6 @@
 🧩Troubleshooting for KiiChain Validator Nodes
 
-This document helps **KiiChain validators** troubleshoot common node issues â€” such as sync failures, unstable peer connections, or configuration errors.
+This document helps **KiiChain validators** troubleshoot common node issues-” such as sync failures, unstable peer connections, or configuration errors.
 
 ---
 
@@ -18,7 +18,8 @@ This document helps **KiiChain validators** troubleshoot common node issues â�
 1. Ensure a stable internet connection and that the RPC port (default `26657`) is open.  
 2. Delete old node data:
    ```bash
-   kiichaind unsafe-reset-all
+   kiichaind tendermint unsafe-reset-all --keep-addr-book
+
    ```
 3. Add persistent peers in `config/config.toml`:
    ```bash
