@@ -1,12 +1,12 @@
-#🧩Troubleshooting for KiiChain Validator Nodes
+🧩Troubleshooting for KiiChain Validator Nodes
 
 This document helps **KiiChain validators** troubleshoot common node issues â€” such as sync failures, unstable peer connections, or configuration errors.
 
 ---
 
-## âš™ï¸ Node Unable to Sync
+⚙️Node Unable to Sync
 
-### ðŸ§  Symptoms
+🧠 Symptoms
 - Node freezes at a specific block height.  
 - Log messages such as:
   ```
@@ -14,7 +14,7 @@ This document helps **KiiChain validators** troubleshoot common node issues â�
   state sync failed: no suitable peers
   ```
 
-### ðŸ› ï¸ Solution
+🛠️ Solution
 1. Ensure a stable internet connection and that the RPC port (default `26657`) is open.  
 2. Delete old node data:
    ```bash
@@ -24,7 +24,7 @@ This document helps **KiiChain validators** troubleshoot common node issues â�
    ```bash
    persistent_peers = "peer1@1.2.3.4:26656,peer2@5.6.7.8:26656"
    ```
-   > ðŸ’¡ Use the peer list from the official documentation or Discord community.
+   💡 Use the peer list from the official documentation or Discord community.
 4. Restart the node:
    ```bash
    systemctl restart kiichaind
@@ -32,12 +32,12 @@ This document helps **KiiChain validators** troubleshoot common node issues â�
 
 ---
 
-## ðŸ” Node Stuck in State Sync
+🔁 Node Stuck in State Sync
 
-### ðŸ§  Symptom
+🧠 Symptom
 Sync stops even though the status is `StateSync: true`.
 
-### ðŸ› ï¸ Solution
+🛠️ Solution
 1. Ensure the `trust_height` and `trust_hash` parameters are valid (use a block from the previous hour).  
 2. Temporarily disable state sync to allow a full sync:
    ```bash
@@ -48,16 +48,15 @@ Sync stops even though the status is `StateSync: true`.
 
 ---
 
-## ðŸŒ No Peers Connected
-
-### ðŸ§  Symptoms
+🌐 No Peers Connected
+🧠 Symptoms
 Logs show:
 ```
 No peers connected
 ```
 The node is not receiving new blocks.
 
-### ðŸ› ï¸ Solution
+🛠️ Solution
 1. Ensure the P2P port (`26656`) is open and not blocked by a firewall.  
 2. Check `config/config.toml`:
    - `seeds` and `persistent_peers` are not empty.  
@@ -69,7 +68,7 @@ The node is not receiving new blocks.
 
 ---
 
-## ðŸ“œ How to View Node Logs
+📜 How to View Node Logs
 
 To view node activity and errors in real time:
 ```bash
@@ -83,7 +82,7 @@ journalctl -u kiichaind -n 50 --no-pager
 
 ---
 
-## âš ï¸ Common Configuration Errors
+⚠️ Common Configuration Errors
 
 | Component       | Common Error                        | Solution |
 |-----------------|--------------------------------------|-----------|
@@ -94,7 +93,7 @@ journalctl -u kiichaind -n 50 --no-pager
 
 ---
 
-## ðŸ’¡ General Tips
+💡 General Tips
 
 - Run the node with:
   ```bash
@@ -108,7 +107,7 @@ journalctl -u kiichaind -n 50 --no-pager
 
 ---
 
-## ðŸ’¬ Need Help?
+💬 Need Help?
 
 If you're still having trouble:
 
