@@ -1,4 +1,4 @@
-# ðŸ§© Troubleshooting for KiiChain Validator Nodes
+#🧩Troubleshooting for KiiChain Validator Nodes
 
 This document helps **KiiChain validators** troubleshoot common node issues â€” such as sync failures, unstable peer connections, or configuration errors.
 
