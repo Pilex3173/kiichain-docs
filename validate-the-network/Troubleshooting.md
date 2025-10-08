@@ -1,98 +1,123 @@
-# 🧩 Troubleshooting for KiiChain Validator Nodes
+# ðŸ§© Troubleshooting for KiiChain Validator Nodes
 
-This document helps KiiChain validators troubleshoot common node issues, such as sync failures, unstable peer connections, or configuration errors.
+This document helps **KiiChain validators** troubleshoot common node issues â€” such as sync failures, unstable peer connections, or configuration errors.
 
 ---
 
-## ⚙️ Node Unable to Sync
+## âš™ï¸ Node Unable to Sync
 
-### Symptoms
-- Node freezes at a specific block height.
-- Log messages such as: ERR failed to fetch block or state sync failed: no suitable peers
+### ðŸ§  Symptoms
+- Node freezes at a specific block height.  
+- Log messages such as:
+  ```
+  ERR failed to fetch block
+  state sync failed: no suitable peers
+  ```
 
-- ### Solution
-1. Ensure a stable internet connection and an open RPC port (default `26657`).
+### ðŸ› ï¸ Solution
+1. Ensure a stable internet connection and that the RPC port (default `26657`) is open.  
 2. Delete old node data:
-```bash
-kiichaind unsafe-reset-all
+   ```bash
+   kiichaind unsafe-reset-all
+   ```
+3. Add persistent peers in `config/config.toml`:
+   ```bash
+   persistent_peers = "peer1@1.2.3.4:26656,peer2@5.6.7.8:26656"
+   ```
+   > ðŸ’¡ Use the peer list from the official documentation or Discord community.
+4. Restart the node:
+   ```bash
+   systemctl restart kiichaind
+   ```
 
-3.Add persistent peers to the config/config.toml file: persistent_peers = "peer1@1.2.3.4:26656,peer2@5.6.7.8:26656"
+---
 
-(Use the peer list from the official documentation or the Discord community.)
+## ðŸ” Node Stuck in State Sync
 
-Restart the node:
+### ðŸ§  Symptom
+Sync stops even though the status is `StateSync: true`.
 
-systemctl restart kiichaind
+### ðŸ› ï¸ Solution
+1. Ensure the `trust_height` and `trust_hash` parameters are valid (use a block from the previous hour).  
+2. Temporarily disable state sync to allow a full sync:
+   ```bash
+   [statesync]
+   enable = false
+   ```
+3. Restart the node to force full synchronization.
 
+---
 
-Node Stuck in State Sync
+## ðŸŒ No Peers Connected
 
-Symptom
-
-Sync stops even though the status is StateSync: true.
-
-Solution
-
-Ensure the trust_height and trust_hash parameters are valid (use a block from the previous hour).
-
-Try temporarily disabling state_sync and allowing full sync:
-
-[statesync]enable = false
-
-Restart the node to force a full sync.
-
-No Peers Connected
-
-Symptoms
-
-Log shows:
-
+### ðŸ§  Symptoms
+Logs show:
+```
 No peers connected
-
+```
 The node is not receiving new blocks.
 
+### ðŸ› ï¸ Solution
+1. Ensure the P2P port (`26656`) is open and not blocked by a firewall.  
+2. Check `config/config.toml`:
+   - `seeds` and `persistent_peers` are not empty.  
+   - `addr_book_strict = false` (recommended for testing mode).  
+3. Add public peers manually:
+   ```bash
+   kiichaind unsafe-reset-peers
+   ```
 
-Solution
+---
 
-Ensure the P2P port (26656) is open and not blocked by the firewall.
+## ðŸ“œ How to View Node Logs
 
-Check the config/config.toml file:
-
-seeds and persistent_peers are not empty.
-
-addr_book_strict = false for testing mode.
-
-Add public peers manually: kiichaind unsafe-reset-peers
-
-How to View Node Logs
-
-To view node activity and errors:
-
+To view node activity and errors in real time:
+```bash
 journalctl -fu kiichaind -o cat
+```
 
-Or just the last 50 lines:
-
+To view only the last 50 lines:
+```bash
 journalctl -u kiichaind -n 50 --no-pager
+```
 
-⚠️ Common Configuration Errors
+---
 
-ComponentsCommon ErrorsSolutionconfig.tomlRPC or P2P port is wrongMake sure default: 26656 (P2P), 26657 (RPC)app.tomlMinimum gas price is emptySet minimum-gas-prices = "0.025ukii"client.tomlChain ID is not appropriateUse kiichain-testnet-1 or appropriate active networkDataCache is not clearedRun unsafe-reset-all before resync
-General Tips
+## âš ï¸ Common Configuration Errors
 
-Run the node with systemctl enable kiichaind to automatically start on reboot.
+| Component       | Common Error                        | Solution |
+|-----------------|--------------------------------------|-----------|
+| `config.toml`   | RPC or P2P port is wrong             | Use defaults: 26656 (P2P), 26657 (RPC) |
+| `app.toml`      | Minimum gas price is empty           | Set `minimum-gas-prices = "0.025ukii"` |
+| `client.toml`   | Wrong chain ID                       | Use `kiichain-testnet-1` or the current active network |
+| Data cache      | Not cleared before resync            | Run `kiichaind unsafe-reset-all` before resync |
 
-Use monitoring tools like Grafana + Prometheus if the validator is active.
+---
 
-Securely back up priv_validator_key.json.
+## ðŸ’¡ General Tips
 
-Always update the binary version from official releases.
+- Run the node with:
+  ```bash
+  systemctl enable kiichaind
+  ```
+  to automatically start it on system reboot.
 
-💬 Need Help?
+- Use **Grafana + Prometheus** for monitoring validator performance.  
+- Securely back up your `priv_validator_key.json`.  
+- Always update your binary from the official releases.
+
+---
+
+## ðŸ’¬ Need Help?
 
 If you're still having trouble:
 
-Open a new issue on GitHub: Issues → New issue → Validator Troubleshooting
+- **Open a new issue on GitHub:**  
+  `Issues â†’ New issue â†’ Validator Troubleshooting`
 
-Or join the official KiiChain Discord community.
-Last updated: October 2025
-Contributor: @Pilex3173
+- **Join the official KiiChain Discord** for community support.
+
+---
+
+_Last updated: October 2025_  
+**Contributor:** @Pilex3173
